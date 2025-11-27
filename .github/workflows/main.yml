@@ -16,7 +16,7 @@ on:
         default: '6.6'
 
 env:
-  REPO_URL: 'https://github.com/ysurac/openmptcprouter'
+  REPO_URL: 'https://github.com/InterfaceGUI/openmptcprouter'
 
 jobs:
   build:
