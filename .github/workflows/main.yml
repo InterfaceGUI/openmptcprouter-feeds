@@ -118,6 +118,13 @@ jobs:
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: ${{ matrix.OMR_TARGET }}-kernel-${{ matrix.OMR_KERNEL }}
+        name: ${{ matrix.OMR_TARGET }}-kernel-${{ matrix.OMR_KERNEL }}-project
         path: /home/runner/work/omr/${{ matrix.OMR_TARGET }}/${{ matrix.OMR_KERNEL }}/source.tar.zst
+        retention-days: 30
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ matrix.OMR_TARGET }}-kernel-${{ matrix.OMR_KERNEL }}-bin
+        path: /home/runner/work/omr/${{ matrix.OMR_TARGET }}/${{ matrix.OMR_KERNEL }}/source/bin
         retention-days: 30
