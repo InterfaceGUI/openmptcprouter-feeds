@@ -93,6 +93,17 @@ jobs:
         OMR_KERNEL: ${{ matrix.OMR_KERNEL }}
       run: |
         OMR_KERNEL="${OMR_KERNEL}" OMR_FEED_SRC="${SOURCE_NAME}" sh build.sh prepare {tools,toolchain}/install -j$(nproc) || OMR_KERNEL="${OMR_KERNEL}" OMR_FEED_SRC="${SOURCE_NAME}" sh build.sh prepare {tools,toolchain}/install -j$(nproc) V=s
+    
+    
+    - name: Apply custom config
+      working-directory: ../../omr
+      env:
+        OMR_TARGET: ${{ matrix.OMR_TARGET }}
+        OMR_KERNEL: ${{ matrix.OMR_KERNEL }}
+      run: |
+        cp ${{ github.workspace }}/custom.config $OMR_TARGET/$OMR_KERNEL/source/.config
+        make -C $OMR_TARGET/$OMR_KERNEL/source defconfig
+
         
     - name: Build packages
       working-directory: ../../omr
