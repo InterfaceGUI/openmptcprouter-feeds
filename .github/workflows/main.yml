@@ -110,9 +110,14 @@ jobs:
       run: |
         make IGNORE_ERRORS=m -C $OMR_TARGET/$OMR_KERNEL/source target/install -j$(nproc) || make IGNORE_ERRORS=m -C $OMR_TARGET/$OMR_KERNEL/source target/install -j$(nproc) V=s
         
+    - name: Compress artifacts
+      run: |
+        cd /home/runner/work/omr/${{ matrix.OMR_TARGET }}/${{ matrix.OMR_KERNEL }}
+        tar -I 'zstd -T0 -19' -cvf source.tar.zst source
+        
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.OMR_TARGET }}-kernel-${{ matrix.OMR_KERNEL }}
-        path: /home/runner/work/omr/${{ matrix.OMR_TARGET }}/${{ matrix.OMR_KERNEL }}/source
+        path: /home/runner/work/omr/${{ matrix.OMR_TARGET }}/${{ matrix.OMR_KERNEL }}/source.tar.zst
         retention-days: 30
